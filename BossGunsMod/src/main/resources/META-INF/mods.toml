@@ -1,0 +1,16 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="MIT"
+
+[[mods]]
+modId="bossgunsmod"
+version="1.0.0"
+displayName="Boss Guns Mod"
+description='''Adds ridiculously OP guns to the game. Pew pew pew.'''
+
+[[dependencies.bossgunsmod]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36,)"
+    ordering="NONE"
+    side="BOTH"
