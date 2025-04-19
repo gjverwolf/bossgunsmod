@@ -1,5 +1,6 @@
 name: Build Mod
 
+# Trigger this workflow on push to the main branch or pull requests to main
 on:
   push:
     branches:
@@ -10,28 +11,19 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Run the job on the latest Ubuntu environment
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2  # Checkout the repository’s code
+
       - name: Set up JDK 8
         uses: actions/setup-java@v2
         with:
-          java-version: '8'
-      - name: Build mod with Gradle
-        run: ./gradlew build
-jar {
-    archiveBaseName = 'BossGunsMod'  // Name of the mod
-    archiveVersion = '1.0'          // Version of the mod
-    from sourceSets.main.output     // Ensures source files are included
-    manifest {
-        attributes(
-            'Specification-Title': 'BossGunsMod',
-            'Specification-Vendor': 'Boss',
-            'Specification-Version': '1.0',
-            'Implementation-Title': 'BossGunsMod',
-            'Implementation-Version': '1.0',
-            'Implementation-Vendor': 'Boss'
-        )
-    }
-}
+          java-version: '8'  # Set up Java 8 for building the mod
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles
