@@ -13,34 +13,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout code from the repository
+      # Step 1: Checkout the code
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Set up JDK 8 for Gradle build
+      # Step 2: Set up JDK 8
       - name: Set up JDK 8
         uses: actions/setup-java@v2
         with:
           java-version: '8'
 
-      # Cache Gradle dependencies to speed up builds
+      # Step 3: Cache Gradle dependencies
       - name: Cache Gradle dependencies
         uses: actions/cache@v3
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
 
-      # Build the mod using Gradle
-      - name: Build the mod with Gradle
+      # Step 4: Build with Gradle
+      - name: Build with Gradle
         run: ./gradlew build
 
-      # Debug step to check if .jar exists in build/libs
+      # Step 5: List the contents of build/libs/ to confirm the path of the .jar file
       - name: List build/libs/ directory
-        run: ls build/libs/
+        run: ls -la build/libs/
 
-      # Upload the generated .jar file as an artifact
+      # Step 6: Upload the .jar file as an artifact (be explicit with the file path)
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v3
         with:
