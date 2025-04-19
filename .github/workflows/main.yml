@@ -23,7 +23,7 @@ jobs:
         with:
           java-version: '8'
 
-      # Step 3: Cache Gradle dependencies to speed up builds
+      # Step 3: Cache Gradle dependencies
       - name: Cache Gradle dependencies
         uses: actions/cache@v3
         with:
@@ -34,11 +34,11 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      # Step 5: List the build/libs/ directory to confirm the .jar exists
-      - name: List build/libs/ directory
-        run: ls -la build/libs/
+      # Step 5: List build directory to check for .jar
+      - name: List build directory
+        run: ls -R build/
 
-      # Step 6: Upload Build Artifacts (only if .jar is present)
+      # Step 6: Upload Build Artifacts
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v3
         with:
