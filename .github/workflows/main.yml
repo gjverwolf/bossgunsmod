@@ -20,3 +20,18 @@ jobs:
           java-version: '8'
       - name: Build mod with Gradle
         run: ./gradlew build
+jar {
+    archiveBaseName = 'BossGunsMod'  // Name of the mod
+    archiveVersion = '1.0'          // Version of the mod
+    from sourceSets.main.output     // Ensures source files are included
+    manifest {
+        attributes(
+            'Specification-Title': 'BossGunsMod',
+            'Specification-Vendor': 'Boss',
+            'Specification-Version': '1.0',
+            'Implementation-Title': 'BossGunsMod',
+            'Implementation-Version': '1.0',
+            'Implementation-Vendor': 'Boss'
+        )
+    }
+}
