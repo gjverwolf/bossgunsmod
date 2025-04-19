@@ -20,4 +20,26 @@ jobs:
 
       # Set up JDK 8 for Gradle build
       - name: Set up JDK 8
-        uses: actions/setup-java@v2  #
+        uses: actions/setup-java@v2  # Explicitly use v2 of actions/setup-java
+        with:
+          java-version: '8'  # Specify Java 8 version for building
+
+      # Cache Gradle dependencies to speed up builds
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3  # Explicitly use v3 of actions/cache
+        with:
+          path: ~/.gradle/caches  # Cache Gradle dependencies
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}  # Cache key
+          restore-keys: |
+            ${{ runner.os }}-gradle-  # Restore key in case of cache miss
+
+      # Build the mod using Gradle
+      - name: Build the mod with Gradle
+        run: ./gradlew build  # Run the Gradle build command
+
+      # Upload the generated .jar file as an artifact
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3  # Explicitly use v3 of actions/upload-artifact
+        with:
+          name: mod-jar  # Name of the artifact
+          path: build/libs/*.jar  # Path to the generated .jar file
